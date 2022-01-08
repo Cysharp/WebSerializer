@@ -32,15 +32,15 @@ public static class WebSerializer
 
     public static void ToQueryString<T>(StringBuilder stringBuilder, in T value, WebSerializerOptions? options = default)
     {
-        using var writer = new StringWriter(stringBuilder);
+        var writer = new WebSerializerWriter(stringBuilder);
         ToQueryString(writer, value, options);
     }
 
-    public static void ToQueryString<T>(StringWriter writer, in T value, WebSerializerOptions? options = default)
+    public static void ToQueryString<T>(in WebSerializerWriter writer, in T value, WebSerializerOptions? options = default)
     {
-        options ??= new WebSerializerOptions(null!);
+        options ??= new WebSerializerOptions(WebSerializerProvider.Default);
         var serialzier = options.GetRequiredSerializer<T>();
-        serialzier.Serialize(writer, ref Unsafe.AsRef(value), options);
+        serialzier.Serialize(ref Unsafe.AsRef(writer), Unsafe.AsRef(value), options);
     }
 
     public static HttpContent ToHttpContent<T>(in T value)

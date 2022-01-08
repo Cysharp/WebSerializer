@@ -5,7 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3F82F4F6-D65E-475D-BCDB-35F6AD7D3DDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSerializer", "src\WebSerializer\WebSerializer.csproj", "{A05A92AE-E8F9-49FA-A080-C145C6ECE44D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSerializer", "src\WebSerializer\WebSerializer.csproj", "{A05A92AE-E8F9-49FA-A080-C145C6ECE44D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "sandbox\ConsoleApp\ConsoleApp.csproj", "{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{1C8C6A46-651B-4DD7-980C-03E77E31A58E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{A05A92AE-E8F9-49FA-A080-C145C6ECE44D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A05A92AE-E8F9-49FA-A080-C145C6ECE44D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A05A92AE-E8F9-49FA-A080-C145C6ECE44D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A05A92AE-E8F9-49FA-A080-C145C6ECE44D} = {3F82F4F6-D65E-475D-BCDB-35F6AD7D3DDB}
+		{CE63CE2E-6B7D-4DD6-BB48-75D0971A73DF} = {1C8C6A46-651B-4DD7-980C-03E77E31A58E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37DC0C5D-4F92-4464-B9EE-AA3174D2E684}
