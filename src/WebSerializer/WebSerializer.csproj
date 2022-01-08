@@ -1,55 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <RootNamespace>Cysharp.Web</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Cysharp.Web</RootNamespace>
+		<LangVersion>10.0</LangVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Serializers\TupleSerializers - コピー.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Serializers\PrimitiveSerializers.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>PrimitiveSerializers.cs</LastGenOutput>
+		</None>
+		<None Update="Serializers\TupleSerializers.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>TupleSerializers.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="Serializers\PrimitiveSerializers.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PrimitiveSerializers.tt</DependentUpon>
-    </None>
-    <None Include="Serializers\TupleSerializers.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TupleSerializers.tt</DependentUpon>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Serializers\PrimitiveSerializers.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PrimitiveSerializers.cs</LastGenOutput>
-    </None>
-    <None Update="Serializers\TupleSerializers.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TupleSerializers.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Serializers\PrimitiveSerializers.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PrimitiveSerializers.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Serializers\TupleSerializers.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TupleSerializers.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Serializers\PrimitiveSerializers.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>PrimitiveSerializers.tt</DependentUpon>
+		</Compile>
+		<Compile Update="Serializers\TupleSerializers.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>TupleSerializers.tt</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
 </Project>

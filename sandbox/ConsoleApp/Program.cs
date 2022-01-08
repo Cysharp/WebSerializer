@@ -1,5 +1,6 @@
 ﻿using Cysharp.Web;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Encodings.Web;
 
@@ -14,17 +15,29 @@ var array = new[] { 1, 10, 100 };
 
 var tako = WebSerializer.ToQueryString(new { foo = 100, tako = "nan\"yあo", hoge = (string?)null, zako = 99.3 });
 
+var yaki = WebSerializer.ToQueryString(new MyRequest { Id = 11, More = new MoreRequest { Id = 99, Name = "yey" } });
 
 Console.WriteLine(tako);
+Console.WriteLine(yaki);
 
 
+[DataContract(Namespace = "foo.")]
 public class MyRequest
 {
+    [DataMember(Name = "id")]
+    public int Id { get; set; } = default!;
+    public MoreRequest? More { get; set; }
+
+    public long MyProperty { get; set; }
+}
+
+[DataContract(Namespace = "bar.")]
+public class MoreRequest
+{
+    [DataMember(Name = "id")]
     public int Id { get; set; } = default!;
     public string? Name { get; set; }
 }
-
-
 
 public class MyRequestSerialzier : IWebSerializer<MyRequest>
 {

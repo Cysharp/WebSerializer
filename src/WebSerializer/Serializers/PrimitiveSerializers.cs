@@ -15,7 +15,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -31,7 +35,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -47,7 +55,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -63,7 +75,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -79,7 +95,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -95,7 +115,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -111,7 +135,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -127,7 +155,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -143,7 +175,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -159,7 +195,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -175,7 +215,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -191,7 +235,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }
@@ -207,7 +255,11 @@ namespace Cysharp.Web.Serializers
             }
             else
             {
+#if NET6_0_OR_GREATER
                 sb.Append(options.CultureInfo, $"{value}");
+#else
+                sb.Append(value.ToString(options.CultureInfo));
+#endif
             }
         }
     }

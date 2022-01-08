@@ -13,9 +13,11 @@ public sealed class BuiltinWebSerializerProvider : IWebSerializerProvider
         { typeof(DateTime), new DateTimeWebSerializer() },
         { typeof(DateTimeOffset), new DateTimeOffsetWebSerializer() },
         { typeof(TimeSpan), new TimeSpanWebSerializer() },
+        { typeof(Uri), new UriWebSerializer() },
+#if NET6_0_OR_GREATER
         { typeof(DateOnly), new DateOnlyWebSerializer() },
         { typeof(TimeOnly), new TimeOnlyWebSerializer() },
-        { typeof(Uri), new UriWebSerializer() },
+#endif
     };
 
     BuiltinWebSerializerProvider()

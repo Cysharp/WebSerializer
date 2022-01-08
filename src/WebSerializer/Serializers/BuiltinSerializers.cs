@@ -15,7 +15,11 @@ public sealed class GuidWebSerializer : IWebSerializer<Guid>
     {
         // no need url-encode(guid tostring is safe).
         // using AppendInterpolatedStringHandler is fastest way to write Guid.
+#if NET6_0_OR_GREATER
         writer.GetStringBuilder().Append($"{value}");
+#else
+        writer.GetStringBuilder().Append(value.ToString());
+#endif
     }
 }
 
@@ -43,6 +47,17 @@ public sealed class TimeSpanWebSerializer : IWebSerializer<TimeSpan>
     }
 }
 
+public sealed class UriWebSerializer : IWebSerializer<Uri>
+{
+    public void Serialize(ref WebSerializerWriter writer, Uri value, WebSerializerOptions options)
+    {
+        if (value == null) return;
+        writer.Append(options, value.ToString());
+    }
+}
+
+#if NET6_0_OR_GREATER
+
 public sealed class DateOnlyWebSerializer : IWebSerializer<DateOnly>
 {
     public void Serialize(ref WebSerializerWriter writer, DateOnly value, WebSerializerOptions options)
@@ -60,11 +75,4 @@ public sealed class TimeOnlyWebSerializer : IWebSerializer<TimeOnly>
     }
 }
 
-public sealed class UriWebSerializer : IWebSerializer<Uri>
-{
-    public void Serialize(ref WebSerializerWriter writer, Uri value, WebSerializerOptions options)
-    {
-        if (value == null) return;
-        writer.Append(options, value.ToString());
-    }
-}
+#endif
