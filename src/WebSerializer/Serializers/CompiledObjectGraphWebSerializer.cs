@@ -32,6 +32,7 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
         var props = typeof(T).GetProperties();
         var fields = typeof(T).GetFields();
         var members = props.Cast<MemberInfo>().Concat(fields)
+            .Where(x => x.GetCustomAttribute<IgnoreWebSerializeAttribute>() == null)
             .Select(x => new SerializableMemberInfo(x))
             .OrderBy(x => x.Order)
             .ThenBy(x => x.Name)

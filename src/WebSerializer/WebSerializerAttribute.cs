@@ -25,3 +25,8 @@ public sealed class WebSerializerAttribute : Attribute
         }
     }
 }
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public sealed class IgnoreWebSerializeAttribute : Attribute
+{
+}

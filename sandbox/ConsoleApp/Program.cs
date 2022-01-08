@@ -4,14 +4,20 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Encodings.Web;
 
-
-var s = WebSerializer.ToQueryString(Tako.dayo);
+var m = new More();
+m.WakaMore = m;
+var s = WebSerializer.ToQueryString(m);
 Console.WriteLine(s);
 
 
 public enum Tako
 {
     Yaki,
-    [EnumMember(Value ="oreoreore")]
+    [EnumMember(Value = "oreoreore")]
     dayo
+}
+
+public class More
+{
+    public More? WakaMore { get; set; }
 }
