@@ -1,4 +1,6 @@
 ﻿using System.Collections.Concurrent;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text.Encodings.Web;
 
 namespace Cysharp.Web.Serializers;
@@ -18,8 +20,19 @@ public sealed class EnumStringWebSerializer<T> : IWebSerializer<T>
 
     static string EnumToString(T value)
     {
+        var str = value.ToString();
+        var field = value.GetType().GetField(str);
+        if (field != null)
+        {
+            var enumMember = field.GetCustomAttribute<EnumMemberAttribute>();
+            if (enumMember != null && enumMember.Value != null)
+            {
+                str = enumMember.Value;
+            }
+        }
+
         // not use WebSerializerOptions.Encoder for performance
-        return UrlEncoder.Default.Encode(value.ToString());
+        return UrlEncoder.Default.Encode(str);
     }
 }
 
