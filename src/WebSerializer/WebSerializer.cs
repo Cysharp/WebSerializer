@@ -39,12 +39,14 @@ public static class WebSerializer
     public static void ToQueryString<T>(in WebSerializerWriter writer, in T value, WebSerializerOptions? options = default)
     {
         options ??= new WebSerializerOptions(WebSerializerProvider.Default);
-        var serialzier = options.GetRequiredSerializer<T>();
-        serialzier.Serialize(ref Unsafe.AsRef(writer), Unsafe.AsRef(value), options);
+        var serializer = options.GetRequiredSerializer<T>();
+        serializer.Serialize(ref Unsafe.AsRef(writer), Unsafe.AsRef(value), options);
     }
 
-    public static HttpContent ToHttpContent<T>(in T value)
+    public static HttpContent ToHttpContent<T>(in T value, WebSerializerOptions? options = default)
     {
-        throw new NotImplementedException();
+        var stringBuilder = new StringBuilder();
+        ToQueryString<T>(stringBuilder, value, options);
+        return new StreamFormUrlEncodedContent(stringBuilder);
     }
 }
