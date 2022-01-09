@@ -1,4 +1,5 @@
 ﻿using Cysharp.Web.Providers;
+using Cysharp.Web.Serializers;
 using System.Collections.Concurrent;
 
 namespace Cysharp.Web;
@@ -48,14 +49,21 @@ internal class DefaultWebSerializerProvider : IWebSerializerProvider
 
         static Cache()
         {
-            foreach (var provider in providers)
+            try
             {
-                var serializer = provider.GetSerializer<T>();
-                if (serializer != null)
+                foreach (var provider in providers)
                 {
-                    Serializer = serializer;
-                    return;
+                    var serializer = provider.GetSerializer<T>();
+                    if (serializer != null)
+                    {
+                        Serializer = serializer;
+                        return;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Serializer = new ErrorSerializer<T>(ex);
             }
         }
     }

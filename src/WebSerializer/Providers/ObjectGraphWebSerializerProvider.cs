@@ -17,7 +17,14 @@ public sealed class ObjectGraphWebSerializerProvider : IWebSerializerProvider
 
     static IWebSerializer? CreateSerializer(Type type)
     {
-        return (IWebSerializer?)Activator.CreateInstance(typeof(CompiledObjectGraphWebSerializer<>).MakeGenericType(type));
+        try
+        {
+            return (IWebSerializer?)Activator.CreateInstance(typeof(CompiledObjectGraphWebSerializer<>).MakeGenericType(type));
+        }
+        catch (Exception ex)
+        {
+            return ErrorSerializer.Create(type, ex);
+        }
     }
 
     static class Cache<T>

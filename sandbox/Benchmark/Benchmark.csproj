@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ConsoleAppFramework" Version="4.0.4" />
-	  <PackageReference Include="Refit" Version="6.1.15" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    <PackageReference Include="Refit" Version="6.1.15" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="6.1.15" />
   </ItemGroup>
 
   <ItemGroup>

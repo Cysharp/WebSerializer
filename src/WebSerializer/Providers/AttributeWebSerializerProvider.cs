@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Cysharp.Web.Serializers;
+using System.Reflection;
 
 namespace Cysharp.Web.Providers;
 
@@ -17,14 +18,21 @@ public sealed class AttributeWebSerializerProvider : IWebSerializerProvider
 
     static IWebSerializer? CreateSerializer(Type type)
     {
-        var attr = type.GetCustomAttribute<WebSerializerAttribute>();
-        if (attr != null)
+        try
         {
-            attr.Validate(type);
-            return (IWebSerializer?)Activator.CreateInstance(attr.Type);
-        }
+            var attr = type.GetCustomAttribute<WebSerializerAttribute>();
+            if (attr != null)
+            {
+                attr.Validate(type);
+                return (IWebSerializer?)Activator.CreateInstance(attr.Type);
+            }
 
-        return null;
+            return null;
+        }
+        catch (Exception ex)
+        {
+            return ErrorSerializer.Create(type, ex);
+        }
     }
 
     static class Cache<T>

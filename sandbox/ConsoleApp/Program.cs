@@ -1,23 +1,20 @@
-﻿using Cysharp.Web;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Text.Encodings.Web;
+﻿using Refit;
 
-var m = new More();
-m.WakaMore = m;
-var s = WebSerializer.ToQueryString(m);
-Console.WriteLine(s);
+var client = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
+//var api = RestService.For<IMinimumAPI>(client);
+//await api.Get(10, "octocat");
 
 
-public enum Tako
+var content = Cysharp.Web.WebSerializer.ToHttpContent(new { sortBy = "じゃがいも だより", sortDirection = SortDirection.Asc, currentPage = 10 });
+var foo = await client.PostAsync("/products", content);
+
+var response = await foo.Content.ReadAsStringAsync();
+Console.WriteLine(response);
+
+
+public enum SortDirection
 {
-    Yaki,
-    [EnumMember(Value = "oreoreore")]
-    dayo
-}
-
-public class More
-{
-    public More? WakaMore { get; set; }
+    Default,
+    Asc,
+    Desc
 }

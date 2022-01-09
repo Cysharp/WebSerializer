@@ -19,31 +19,38 @@ public sealed class GenericsWebSerializerProvider : IWebSerializerProvider
 
     static IWebSerializer? CreateSerializer(Type type)
     {
-        if (type.IsGenericType)
+        try
         {
-            // Nullable<T>
-            var nullableUnderlying = Nullable.GetUnderlyingType(type);
-            if (nullableUnderlying != null)
+            if (type.IsGenericType)
             {
-                return CreateInstance(typeof(NullableWebSerializer<>), new[] { nullableUnderlying });
+                // Nullable<T>
+                var nullableUnderlying = Nullable.GetUnderlyingType(type);
+                if (nullableUnderlying != null)
+                {
+                    return CreateInstance(typeof(NullableWebSerializer<>), new[] { nullableUnderlying });
+                }
+
+                // Tuple/ValueTuple
+                if (type.IsAssignableTo(typeof(ITuple)))
+                {
+                    var serializerType = (type.IsValueType)
+                        ? TupleWebSerializer.GetValueTupleWebSerializerType(type.GenericTypeArguments.Length)
+                        : TupleWebSerializer.GetTupleWebSerializerType(type.GenericTypeArguments.Length);
+
+                    return CreateInstance(serializerType, type.GetGenericArguments());
+                }
+            }
+            else if (type.IsEnum)
+            {
+                return CreateInstance(typeof(EnumStringWebSerializer<>), new[] { type });
             }
 
-            // Tuple/ValueTuple
-            if (type.IsAssignableTo(typeof(ITuple)))
-            {
-                var serializerType = (type.IsValueType)
-                    ? TupleWebSerializer.GetValueTupleWebSerializerType(type.GenericTypeArguments.Length)
-                    : TupleWebSerializer.GetTupleWebSerializerType(type.GenericTypeArguments.Length);
-
-                return CreateInstance(serializerType, type.GetGenericArguments());
-            }
+            return null;
         }
-        else if (type.IsEnum)
+        catch (Exception ex)
         {
-            return CreateInstance(typeof(EnumStringWebSerializer<>), new[] { type });
+            return ErrorSerializer.Create(type, ex);
         }
-
-        return null;
     }
 
     static IWebSerializer? CreateInstance(Type genericType, Type[] genericTypeArguments, params object[] arguments)

@@ -30,6 +30,11 @@ public struct WebSerializerWriter
         }
     }
 
+    public WebSerializerWriter()
+        : this(new StringBuilder())
+    {
+    }
+
     public WebSerializerWriter(StringBuilder stringBuilder)
     {
         this.stringBuilder = stringBuilder;
@@ -80,19 +85,40 @@ public struct WebSerializerWriter
         stringBuilder.Append('&');
     }
 
+    /// <summary>Append '='.</summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AppendEqual()
+    {
+        stringBuilder.Append('=');
+    }
+
     /// <summary>Append encoded string.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Append(WebSerializerOptions options, string value)
+    public void Append(string value, WebSerializerOptions options)
     {
         options.Encoder.Encode(Writer, value);
     }
 
     /// <summary>Append encoded string.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Append(WebSerializerOptions options, char[] value, int start, int count)
+    public void Append(char[] value, int start, int count, WebSerializerOptions options)
     {
         options.Encoder.Encode(Writer, value, start, count);
     }
+
+    public void AppendPrimitive(bool value) => stringBuilder.Append(value);
+    public void AppendPrimitive(byte value) => stringBuilder.Append(value);
+    public void AppendPrimitive(sbyte value) => stringBuilder.Append(value);
+    public void AppendPrimitive(char value) => stringBuilder.Append(value);
+    public void AppendPrimitive(decimal value) => stringBuilder.Append(value);
+    public void AppendPrimitive(double value) => stringBuilder.Append(value);
+    public void AppendPrimitive(float value) => stringBuilder.Append(value);
+    public void AppendPrimitive(int value) => stringBuilder.Append(value);
+    public void AppendPrimitive(uint value) => stringBuilder.Append(value);
+    public void AppendPrimitive(long value) => stringBuilder.Append(value);
+    public void AppendPrimitive(ulong value) => stringBuilder.Append(value);
+    public void AppendPrimitive(short value) => stringBuilder.Append(value);
+    public void AppendPrimitive(ushort value) => stringBuilder.Append(value);
 
     static void ThrowReachedMaxDepth(int depth)
     {

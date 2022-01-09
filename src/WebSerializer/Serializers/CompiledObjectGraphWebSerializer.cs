@@ -83,7 +83,7 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
     {
         // SerializeMethod(ref WebSerializerWriter writer, string[] encodedNames, IWebSerializer[]? alternateSerializers, T value, WebSerializerOptions options)
         // foreach(members)
-        //   if (value.Foo != null) // reference type
+        //   if (value.Foo != null) // reference type || nullable type
         //     if (i != 0) writer.AppendConcatenate()
         //     writer.AppendNamePrefix()
         //     writer.AppendRaw(encodedNames[i])
@@ -132,7 +132,7 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
 
             var bodyBlock = Expression.Block(writeBody);
 
-            if (!memberInfo.MemberType.IsValueType)
+            if (!memberInfo.MemberType.IsValueType || memberInfo.MemberType.IsNullable())
             {
                 var nullExpr = Expression.Constant(null, memberInfo.MemberType);
                 var ifBody = Expression.IfThen(Expression.NotEqual(memberInfo.GetMemberExpression(argValue), nullExpr), bodyBlock);

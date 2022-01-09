@@ -18,18 +18,15 @@ internal sealed class StreamFormUrlEncodedContent : HttpContent
 
     protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
     {
-        foreach (var item in stringBuilder.GetChunks())
+        var buffer = ArrayPool<byte>.Shared.Rent(stringBuilder.Length);
+        try
         {
-            var buffer = ArrayPool<byte>.Shared.Rent(item.Length);
-            try
-            {
-                Encoding.Latin1.GetBytes(item.Span, buffer);
-                stream.Write(buffer.AsSpan(0, item.Length));
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            EncodeToBuffer(buffer, stringBuilder);
+            stream.Write(buffer, 0, stringBuilder.Length);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 
@@ -40,18 +37,25 @@ internal sealed class StreamFormUrlEncodedContent : HttpContent
 
     protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
     {
-        foreach (var item in stringBuilder.GetChunks())
+        var buffer = ArrayPool<byte>.Shared.Rent(stringBuilder.Length);
+        try
         {
-            var buffer = ArrayPool<byte>.Shared.Rent(item.Length);
-            try
-            {
-                Encoding.Latin1.GetBytes(item.Span, buffer);
-                await stream.WriteAsync(buffer, 0, item.Length, cancellationToken);
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            EncodeToBuffer(buffer, stringBuilder);
+            await stream.WriteAsync(buffer, 0, stringBuilder.Length, cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    static void EncodeToBuffer(byte[] buffer, StringBuilder stringBuilder)
+    {
+        var span = buffer.AsSpan();
+        foreach (var item in stringBuilder.GetChunks()) // stream.WriteAsync per chunk is slow, encode to buffer all data
+        {
+            var written = Encoding.Latin1.GetBytes(item.Span, span);
+            span = span.Slice(written);
         }
     }
 

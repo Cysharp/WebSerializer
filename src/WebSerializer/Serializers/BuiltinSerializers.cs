@@ -5,7 +5,7 @@ public sealed class StringWebSerializer : IWebSerializer<string?>
     public void Serialize(ref WebSerializerWriter writer, string? value, WebSerializerOptions options)
     {
         if (value == null) return;
-        writer.Append(options, value);
+        writer.Append(value, options);
     }
 }
 
@@ -27,7 +27,7 @@ public sealed class DateTimeWebSerializer : IWebSerializer<DateTime>
 {
     public void Serialize(ref WebSerializerWriter writer, DateTime value, WebSerializerOptions options)
     {
-        writer.Append(options, value.ToString(options.CultureInfo));
+        writer.Append(value.ToString(options.CultureInfo), options);
     }
 }
 
@@ -35,7 +35,7 @@ public sealed class DateTimeOffsetWebSerializer : IWebSerializer<DateTimeOffset>
 {
     public void Serialize(ref WebSerializerWriter writer, DateTimeOffset value, WebSerializerOptions options)
     {
-        writer.Append(options, value.ToString(options.CultureInfo));
+        writer.Append(value.ToString(options.CultureInfo), options);
     }
 }
 
@@ -43,7 +43,7 @@ public sealed class TimeSpanWebSerializer : IWebSerializer<TimeSpan>
 {
     public void Serialize(ref WebSerializerWriter writer, TimeSpan value, WebSerializerOptions options)
     {
-        writer.Append(options, value.ToString());
+        writer.Append(value.ToString(), options);
     }
 }
 
@@ -52,7 +52,7 @@ public sealed class UriWebSerializer : IWebSerializer<Uri>
     public void Serialize(ref WebSerializerWriter writer, Uri value, WebSerializerOptions options)
     {
         if (value == null) return;
-        writer.Append(options, value.ToString());
+        writer.Append(value.ToString(), options);
     }
 }
 
@@ -62,7 +62,7 @@ public sealed class DateOnlyWebSerializer : IWebSerializer<DateOnly>
 {
     public void Serialize(ref WebSerializerWriter writer, DateOnly value, WebSerializerOptions options)
     {
-        writer.Append(options, value.ToString());
+        writer.Append(value.ToString(), options);
     }
 }
 
@@ -71,7 +71,7 @@ public sealed class TimeOnlyWebSerializer : IWebSerializer<TimeOnly>
 {
     public void Serialize(ref WebSerializerWriter writer, TimeOnly value, WebSerializerOptions options)
     {
-        writer.Append(options, value.ToString());
+        writer.Append(value.ToString(), options);
     }
 }
 

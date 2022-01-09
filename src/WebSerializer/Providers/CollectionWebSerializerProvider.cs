@@ -18,27 +18,34 @@ public sealed class CollectionWebSerializerProvider : IWebSerializerProvider
 
     static IWebSerializer? CreateSerializer(Type type)
     {
-        if (type.IsGenericType || type.IsArray)
+        try
         {
-            // Generic Dictionary
-            var dictionaryDef = type.GetImplementedGenericType(typeof(IDictionary<,>));
-            if (dictionaryDef != null)
+            if (type.IsGenericType || type.IsArray)
             {
-                var keyType = dictionaryDef.GenericTypeArguments[0];
-                var valueType = dictionaryDef.GenericTypeArguments[1];
-                return CreateInstance(typeof(DictionaryWebSerializer<,,>), new[] { type, keyType, valueType });
+                // Generic Dictionary
+                var dictionaryDef = type.GetImplementedGenericType(typeof(IDictionary<,>));
+                if (dictionaryDef != null)
+                {
+                    var keyType = dictionaryDef.GenericTypeArguments[0];
+                    var valueType = dictionaryDef.GenericTypeArguments[1];
+                    return CreateInstance(typeof(DictionaryWebSerializer<,,>), new[] { type, keyType, valueType });
+                }
+
+                // Generic Collections
+                var enumerableDef = type.GetImplementedGenericType(typeof(IEnumerable<>));
+                if (enumerableDef != null)
+                {
+                    var elementType = enumerableDef.GenericTypeArguments[0];
+                    return CreateInstance(typeof(EnumerableWebSerializer<,>), new[] { type, elementType });
+                }
             }
 
-            // Generic Collections
-            var enumerableDef = type.GetImplementedGenericType(typeof(IEnumerable<>));
-            if (enumerableDef != null)
-            {
-                var elementType = enumerableDef.GenericTypeArguments[0];
-                return CreateInstance(typeof(EnumerableWebSerializer<,>), new[] { type, elementType });
-            }
+            return null;
         }
-
-        return null;
+        catch (Exception ex)
+        {
+            return ErrorSerializer.Create(type, ex);
+        }
     }
 
     static IWebSerializer? CreateInstance(Type genericType, Type[] genericTypeArguments, params object[] arguments)

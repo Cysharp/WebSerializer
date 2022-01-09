@@ -44,6 +44,8 @@ public sealed class DictionaryWebSerializer<TDictionary, TKey, TValue> : IWebSer
         var first = true;
         foreach (var item in value)
         {
+            if (item.Value == null) continue;
+
             if (first)
             {
                 first = false;
