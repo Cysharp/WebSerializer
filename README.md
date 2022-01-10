@@ -251,19 +251,18 @@ Register to `WebSerializerProvider` affects all type. If you want to configure p
 ```csharp
 public class MyRequest
 {
-    // Id is serialized by IdCustomSerializer
-    [WebSerializer(typeof(IdCustomSerializer))]
-    public int Id { get; set; }
+    // Timestamp is serialized by UnixSecondsSerializer
+    [WebSerializer(typeof(UnixSecondsSerializer))]
+    public DateTime Timestamp { get; set; }
 
     public string? Name { get; set; }
 }
 
-public class IdCustomSerializer : IWebSerializer<int>
+public class UnixSecondsSerializer : IWebSerializer<DateTime>
 {
-    public void Serialize(ref WebSerializerWriter writer, int value, WebSerializerOptions options)
+    public void Serialize(ref WebSerializerWriter writer, DateTime value, WebSerializerOptions options)
     {
-        if ( value < 0) value = 0;
-        writer.GetStringBuilder().Append(value);
+        writer.AppendPrimitive(((DateTimeOffset)(value)).ToUnixTimeSeconds());
     }
 }
 ```
