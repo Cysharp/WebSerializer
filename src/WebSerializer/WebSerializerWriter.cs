@@ -78,7 +78,7 @@ public struct WebSerializerWriter
         stringBuilder.Append(value);
     }
 
-    /// <summary>Append '&'.</summary>
+    /// <summary>Append and.</summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendConcatenate()
     {

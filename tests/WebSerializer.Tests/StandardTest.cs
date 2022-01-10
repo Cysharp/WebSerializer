@@ -1,3 +1,5 @@
+using System.Runtime.Serialization;
+
 namespace WebSerializerTests;
 
 public class StandardTest
@@ -67,8 +69,12 @@ public class StandardTest
 
     public class PagingRequest
     {
+
+        [DataMember(Order = 1)]
         public string? SortBy { get; init; }
+        [DataMember(Order = 2)]
         public SortDirection SortDirection { get; init; }
+        [DataMember(Order = 0)]
         public int CurrentPage { get; init; } = 1;
     }
 
