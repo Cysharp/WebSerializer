@@ -18,7 +18,6 @@ env:
 
 jobs:
   build-dotnet:
-    needs: [update-packagejson]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -44,7 +43,7 @@ jobs:
 
   create-release:
     if: github.event.inputs.dry_run == 'false'
-    needs: [update-packagejson, build-dotnet, build-unity]
+    needs: [build-dotnet]
     runs-on: ubuntu-latest
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -69,7 +68,7 @@ jobs:
 
   cleanup:
     if: github.event.inputs.dry_run == 'true'
-    needs: [build-dotnet, build-unity]
+    needs: [build-dotnet]
     runs-on: ubuntu-latest
     steps:
       - name: Delete branch
