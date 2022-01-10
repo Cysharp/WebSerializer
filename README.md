@@ -353,6 +353,10 @@ Append(char[] value, int start, int count, WebSerializerOptions options)
 AppendPrimitive(bool, byte, sbyte, int, etc...)
 ```
 
+Deserialize
+---
+WebSerializer has no deserialize method because ASP.NET Core has model binding in controller.
+
 License
 ---
 This library is licensed under the MIT License.
