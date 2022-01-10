@@ -62,7 +62,7 @@ public sealed class DateOnlyWebSerializer : IWebSerializer<DateOnly>
 {
     public void Serialize(ref WebSerializerWriter writer, DateOnly value, WebSerializerOptions options)
     {
-        writer.Append(value.ToString(), options);
+        writer.Append(value.ToString(options.CultureInfo), options);
     }
 }
 
@@ -71,7 +71,7 @@ public sealed class TimeOnlyWebSerializer : IWebSerializer<TimeOnly>
 {
     public void Serialize(ref WebSerializerWriter writer, TimeOnly value, WebSerializerOptions options)
     {
-        writer.Append(value.ToString(), options);
+        writer.Append(value.ToString(options.CultureInfo), options);
     }
 }
 

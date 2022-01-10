@@ -1,0 +1,79 @@
+name: Build-Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "tag: git tag you want create. (sample 1.0.0)"
+        required: true
+      dry_run:
+        description: "dry_run: true will never create relase/nuget."
+        required: true
+        default: "false"
+
+env:
+  GIT_TAG: ${{ github.event.inputs.tag }}
+  DRY_RUN: ${{ github.event.inputs.dry_run }}
+  DRY_RUN_BRANCH_PREFIX: "test_release"
+
+jobs:
+  build-dotnet:
+    needs: [update-packagejson]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      NUGET_XMLDOC_MODE: skip
+    steps:
+      - run: echo ${{ needs.update-packagejson.outputs.sha }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ needs.update-packagejson.outputs.sha }}
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      - run: dotnet build src/WebSerializer -c Release -p:Version=${{ env.GIT_TAG }}
+      - run: dotnet test tests/WebSerializer.Tests -c Release --no-build
+      - run: dotnet pack ./src/WebSerializer/WebSerializer.csproj -c Release --no-build -p:Version=${{ env.GIT_TAG }} -o ./publish
+      # Store artifacts.
+      - uses: actions/upload-artifact@v1
+        with:
+          name: nuget
+          path: ./publish/
+
+  create-release:
+    if: github.event.inputs.dry_run == 'false'
+    needs: [update-packagejson, build-dotnet, build-unity]
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      NUGET_XMLDOC_MODE: skip
+    steps:
+      # Create Release
+      - uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GIT_TAG }}
+          release_name: Ver.${{ env.GIT_TAG }}
+          commitish: ${{ needs.update-packagejson.outputs.sha }}
+          draft: true
+          prerelease: false
+      # Download (All) Artifacts to current directory
+      - uses: actions/download-artifact@v2-preview
+      # Upload to NuGet
+      - run: dotnet nuget push "./nuget/*.nupkg" --skip-duplicate -s https://www.nuget.org/api/v2/package -k ${{ secrets.NUGET_KEY }}
+
+  cleanup:
+    if: github.event.inputs.dry_run == 'true'
+    needs: [build-dotnet, build-unity]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ github.token }}
+          branches: ${{ env.DRY_RUN_BRANCH_PREFIX }}-${{ env.GIT_TAG }}

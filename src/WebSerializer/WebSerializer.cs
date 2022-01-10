@@ -47,6 +47,6 @@ public static class WebSerializer
     {
         var stringBuilder = new StringBuilder();
         ToQueryString<T>(stringBuilder, value, options);
-        return new StreamFormUrlEncodedContent(stringBuilder);
+        return new WebSerializerFormUrlEncodedContent(stringBuilder);
     }
 }

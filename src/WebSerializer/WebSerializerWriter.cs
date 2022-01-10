@@ -17,7 +17,7 @@ public struct WebSerializerWriter
     public string? NamePrefix
     {
         get => namePrefix;
-        init
+        set
         {
             if (value != null)
             {
@@ -106,18 +106,31 @@ public struct WebSerializerWriter
         options.Encoder.Encode(Writer, value, start, count);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(bool value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(byte value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(sbyte value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(char value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(decimal value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(double value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(float value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(int value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(uint value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(long value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(ulong value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(short value) => stringBuilder.Append(value);
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AppendPrimitive(ushort value) => stringBuilder.Append(value);
 
     static void ThrowReachedMaxDepth(int depth)

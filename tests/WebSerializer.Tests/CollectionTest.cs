@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,12 +29,14 @@ public class CollectionTest
             {"DEAR", true }
         };
 
-        var newConfig = WebSerializerOptions.Default with
-        {
-            Provider = WebSerializerProvider.Create(
-                new[] { new BoolZeroOneSerializer() },
-                new[] { WebSerializerProvider.Default })
-        };
+            var newConfig = WebSerializerOptions.Default with
+            {
+                CultureInfo = CultureInfo.CurrentCulture,
+                CollectionSeparator = "  ",
+                Provider = WebSerializerProvider.Create(
+                    new[] { new BoolZeroOneSerializer() },
+                    new[] { WebSerializerProvider.Default })
+            };
         WebSerializer.ToQueryString(foo, newConfig).Should().Be("Yeah=100&Kuooo=nano%20yo&DEAR=0");
     }
 
