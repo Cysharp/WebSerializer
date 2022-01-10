@@ -1,4 +1,7 @@
-using System.Runtime.Serialization;
+ï»¿using System.Runtime.Serialization;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Web;
 
 namespace WebSerializerTests;
 
@@ -7,11 +10,13 @@ public class StandardTest
     [Fact]
     public void ToQueryString()
     {
+
+
         var req = new PagingRequest
         {
             SortDirection = SortDirection.Default,
             CurrentPage = 10,
-            SortBy = "hoge and “ú–{Œê japanese"
+            SortBy = "hoge and æ—¥æœ¬èªž japanese"
         };
 
         var nullreq = new PagingRequest
@@ -20,6 +25,8 @@ public class StandardTest
             CurrentPage = 8888,
             SortBy = null
         };
+
+
 
         var one = WebSerializer.ToQueryString(req);
         var two = WebSerializer.ToQueryString("/hogemoge", req);
@@ -39,7 +46,7 @@ public class StandardTest
         {
             SortDirection = SortDirection.Default,
             CurrentPage = 10,
-            SortBy = "hoge and “ú–{Œê japanese"
+            SortBy = "hoge and æ—¥æœ¬èªž japanese"
         };
 
         var content = WebSerializer.ToHttpContent(req);
@@ -49,7 +56,7 @@ public class StandardTest
         var form = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
         {
             new ("CurrentPage", "10" ),
-            new ("SortBy", "hoge and “ú–{Œê japanese" ),
+            new ("SortBy", "hoge and æ—¥æœ¬èªž japanese" ),
             new ("SortDirection", "Default" ),
         });
 

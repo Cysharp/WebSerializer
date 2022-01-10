@@ -1,43 +1,83 @@
 ﻿using Cysharp.Web;
-using Refit;
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Text;
 
-var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
+//var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
 //var api = RestService.For<IMinimumAPI>(client);
 //await api.Get(10, "octocat");
 
+System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture);
+
+var a = System.Text.Encodings.Web.UrlEncoder.Default.Encode("hoge and 日本語 japanese");
+var b = System.Text.Encodings.Web.UrlEncoder.Default.Encode(a);
+//Console.WriteLine(b);
+
+var req = new PagingRequest
+{
+    SortDirection = SortDirection.Default,
+    CurrentPage = 10,
+    SortBy = "hoge and 日本語 japanese"
+};
+
+var nullreq = new PagingRequest
+{
+    SortDirection = SortDirection.Asc,
+    CurrentPage = 8888,
+    SortBy = null
+};
+
+var one = WebSerializer.ToQueryString(req);
+var two = WebSerializer.ToQueryString("/hogemoge", req);
+var three = WebSerializer.ToQueryString(nullreq);
+var four = WebSerializer.ToQueryString("/hogemoge", nullreq);
 
 
-
-//var q = WebSerializer.ToQueryString(req);
-
-var tweet = new Tweet("foo", DateTimeOffset.Now.ToUnixTimeSeconds());
-var user = new User(1999, "baz");
+Console.WriteLine(one);
 
 
-// use writer instead of StringBuilder
-var writer = new WebSerializerWriter();
+////var q = WebSerializer.ToQueryString(req);
 
-writer.NamePrefix = "tweet."; // set prefix by writer.
-WebSerializer.ToQueryString(writer, tweet); // serialize to writer
+//var tweet = new Tweet("foo", DateTimeOffset.Now.ToUnixTimeSeconds());
+//var user = new User(1999, "baz");
 
-writer.AppendConcatenate(); // Append '&'
 
-writer.NamePrefix = "user.";
-WebSerializer.ToQueryString(writer, user);
+//// use writer instead of StringBuilder
+//var writer = new WebSerializerWriter();
 
-var q = writer.GetStringBuilder().ToString(); // get inner stringbuilder.
+//writer.NamePrefix = "tweet."; // set prefix by writer.
+//WebSerializer.ToQueryString(writer, tweet); // serialize to writer
 
-// tweet.created=1641816933&tweet.msg=foo&user.id=1999&user.name=baz
-Console.WriteLine(q);
+//writer.AppendConcatenate(); // Append '&'
+
+//writer.NamePrefix = "user.";
+//WebSerializer.ToQueryString(writer, user);
+
+//var q = writer.GetStringBuilder().ToString(); // get inner stringbuilder.
+
+//// tweet.created=1641816933&tweet.msg=foo&user.id=1999&user.name=baz
+//Console.WriteLine(q);
 
 
 
 
 
 // ----
+
+
+public class PagingRequest
+{
+
+    [DataMember(Order = 1)]
+    public string? SortBy { get; init; }
+    [DataMember(Order = 2)]
+    public SortDirection SortDirection { get; init; }
+    [DataMember(Order = 0)]
+    public int CurrentPage { get; init; } = 1;
+}
+
+
 
 public record Tweet(string? msg, long created);
 public record User(long id, string? name);
