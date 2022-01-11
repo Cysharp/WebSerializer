@@ -306,14 +306,14 @@ WebSerializerOptions is immutable record, you can configure new options uses C# 
 
 ```csharp
 // CultureInfo: Used by converting number or DateTime, etc. Default is null.
-// CollectionSeparator: Separator of converting array, etc. Default is ",".
+// CollectionSeparator: Separator of converting array, etc. Default is null(concatenate as name=value&name=value...)
 // Encoder: Url encoder of serialization, Default is UrlEncoder.Default.
 // MaxDepth: Detect circular reference, Default is 64.
 // Provider: Setup custom serializer by type. Default is `WebSerializerProvider.Default`.
 var newConfig = WebSerializerOptions.Default with
 {
     CultureInfo = CultureInfo.InvariantCulture,
-    CollectionSeparator = "  ",
+    CollectionSeparator = ",",
     Encoder = UrlEncoder.Default,
     MaxDepth = 32,
     Provider = WebSerializerProvider.Create(
