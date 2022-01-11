@@ -2,10 +2,20 @@
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Web;
 
 //var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
 //var api = RestService.For<IMinimumAPI>(client);
 //await api.Get(10, "octocat");
+
+//var k = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+//var s1 = UrlEncoder.Default.Encode(k);
+//var s2 = HttpUtility.UrlEncode(k);
+//Console.WriteLine(s1);
+//Console.WriteLine(s2);
+//return;
+
 
 System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture);
