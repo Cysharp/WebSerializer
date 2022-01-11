@@ -17,7 +17,10 @@ var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000")
 //return;
 
 
-await httpClient.GetAsync(WebSerializer.ToQueryString("Products", new { foo = new[] { 1, 10, 1000 } }, WebSerializerOptions.Default with { CollectionSeparator = "," }));
+//await httpClient.GetAsync(WebSerializer.ToQueryString("Products", new { foo = new[] { 1, 10, 1000 } }, WebSerializerOptions.Default with { CollectionSeparator = "," }));
+
+var s = WebSerializer.ToQueryString("http://www.example.com/q?foo=bar", new { hoge = "moge" });
+Console.WriteLine(s);
 
 return;
     

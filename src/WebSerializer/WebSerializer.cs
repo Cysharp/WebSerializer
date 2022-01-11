@@ -16,7 +16,14 @@ public static class WebSerializer
     {
         var sb = new StringBuilder();
         sb.Append(urlBase);
-        sb.Append("?");
+        if (urlBase.Contains('?'))
+        {
+            sb.Append("&");
+        }
+        else
+        {
+            sb.Append("?");
+        }
 
         var beforeLength = sb.Length;
         ToQueryString<T>(sb, value, options);
