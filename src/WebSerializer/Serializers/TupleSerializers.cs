@@ -11,6 +11,7 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
 
@@ -23,6 +24,7 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
 
@@ -37,9 +39,22 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
 
             writer.Exit();
@@ -51,9 +66,22 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
 
             writer.Exit();
@@ -67,11 +95,36 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
 
             writer.Exit();
@@ -83,11 +136,36 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
 
             writer.Exit();
@@ -101,13 +179,50 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
 
             writer.Exit();
@@ -119,13 +234,50 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3, T4> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
 
             writer.Exit();
@@ -139,15 +291,64 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
 
             writer.Exit();
@@ -159,15 +360,64 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3, T4, T5> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
 
             writer.Exit();
@@ -181,17 +431,78 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
 
             writer.Exit();
@@ -203,17 +514,78 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3, T4, T5, T6> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
 
             writer.Exit();
@@ -227,19 +599,92 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T7>().Serialize(ref writer, value.Item7, options);
 
             writer.Exit();
@@ -251,19 +696,92 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3, T4, T5, T6, T7> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T7>().Serialize(ref writer, value.Item7, options);
 
             writer.Exit();
@@ -278,21 +796,106 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T7>().Serialize(ref writer, value.Item7, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<TRest>().Serialize(ref writer, value.Rest, options);
 
             writer.Exit();
@@ -305,21 +908,106 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
             options.GetRequiredSerializer<T1>().Serialize(ref writer, value.Item1, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T2>().Serialize(ref writer, value.Item2, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T3>().Serialize(ref writer, value.Item3, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T4>().Serialize(ref writer, value.Item4, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T5>().Serialize(ref writer, value.Item5, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T6>().Serialize(ref writer, value.Item6, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<T7>().Serialize(ref writer, value.Item7, options);
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
             options.GetRequiredSerializer<TRest>().Serialize(ref writer, value.Rest, options);
 
             writer.Exit();

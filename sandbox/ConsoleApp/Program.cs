@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Web;
 
-//var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
+var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
 //var api = RestService.For<IMinimumAPI>(client);
 //await api.Get(10, "octocat");
 
@@ -17,34 +17,13 @@ using System.Web;
 //return;
 
 
-System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
-Console.WriteLine(System.Globalization.CultureInfo.CurrentCulture);
+await httpClient.GetAsync(WebSerializer.ToQueryString("Products", new { foo = new[] { 1, 10, 1000 } }, WebSerializerOptions.Default with { CollectionSeparator = "," }));
 
-var a = System.Text.Encodings.Web.UrlEncoder.Default.Encode("hoge and 日本語 japanese");
-var b = System.Text.Encodings.Web.UrlEncoder.Default.Encode(a);
-//Console.WriteLine(b);
-
-var req = new PagingRequest
-{
-    SortDirection = SortDirection.Default,
-    CurrentPage = 10,
-    SortBy = "hoge and 日本語 japanese"
-};
-
-var nullreq = new PagingRequest
-{
-    SortDirection = SortDirection.Asc,
-    CurrentPage = 8888,
-    SortBy = null
-};
-
-var one = WebSerializer.ToQueryString(req);
-var two = WebSerializer.ToQueryString("/hogemoge", req);
-var three = WebSerializer.ToQueryString(nullreq);
-var four = WebSerializer.ToQueryString("/hogemoge", nullreq);
-
-
-Console.WriteLine(one);
+return;
+    
+//var foo = WebSerializer.ToQueryString(new { hoge = new[] { 1, 10, 100 }, huga = (1000, 2000, 3000) });
+//var foo = WebSerializer.ToQueryString(new { hoge = new[] { 1, 100, 1000 } });
+//Console.WriteLine(foo);
 
 
 ////var q = WebSerializer.ToQueryString(req);

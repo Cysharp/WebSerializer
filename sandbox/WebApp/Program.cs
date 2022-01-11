@@ -40,15 +40,18 @@ public class ProductsController : Controller
         this.logger = logger;
     }
 
-    //public void Get(PagingData pageData)
-    //{
-    //    //return $"SortBy:{pageData.SortBy}, " + $"SortDirection:{pageData.SortDirection}, CurrentPage:{pageData.CurrentPage}";
-    //    logger.ZLogInformation("SortBy:{0} SortDirection:{1} CurrentPage:{2}", pageData.SortBy, pageData.SortDirection, pageData.CurrentPage);
-    //}
-
-    public string Post(PagingData pageData)
+    public void Get(int[] foo)
     {
-        return $"SortBy:{pageData.SortBy}, " + $"SortDirection:{pageData.SortDirection}, CurrentPage:{pageData.CurrentPage}";
-        //logger.ZLogInformation("SortBy:{0} SortDirection:{1} CurrentPage:{2}", pageData.SortBy, pageData.SortDirection, pageData.CurrentPage);
+        //return $"SortBy:{pageData.SortBy}, " + $"SortDirection:{pageData.SortDirection}, CurrentPage:{pageData.CurrentPage}";
+        foreach (var item in foo)
+        {
+            logger.ZLogInformation("ITEM:{0}", item);
+        }
     }
+
+    //public string Post(PagingData pageData)
+    //{
+    //    return $"SortBy:{pageData.SortBy}, " + $"SortDirection:{pageData.SortDirection}, CurrentPage:{pageData.CurrentPage}";
+    //    //logger.ZLogInformation("SortBy:{0} SortDirection:{1} CurrentPage:{2}", pageData.SortBy, pageData.SortDirection, pageData.CurrentPage);
+    //}
 }

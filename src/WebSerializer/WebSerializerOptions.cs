@@ -14,13 +14,20 @@ public record WebSerializerOptions(IWebSerializerProvider Provider)
     public UrlEncoder Encoder { get; init; } = CreateDefaultEncoderWithEncodeSemicolon();
     public int MaxDepth { get; init; } = 64;
 
-    string separator = ",";
-    public string CollectionSeparator
+    string? separator = null;
+    public string? CollectionSeparator
     {
         get => separator;
         init
         {
-            separator = Encoder.Encode(value);
+            if (value != null)
+            {
+                separator = Encoder.Encode(value);
+            }
+            else
+            {
+                separator = null;
+            }
         }
     }
 

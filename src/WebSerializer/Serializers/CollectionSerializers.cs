@@ -1,4 +1,6 @@
-﻿namespace Cysharp.Web.Serializers;
+﻿using System.Text;
+
+namespace Cysharp.Web.Serializers;
 
 public sealed class EnumerableWebSerializer<TCollection, TElement> : IWebSerializer<TCollection>
     where TCollection : IEnumerable<TElement>
@@ -11,6 +13,9 @@ public sealed class EnumerableWebSerializer<TCollection, TElement> : IWebSeriali
 
         var serializer = options.GetRequiredSerializer<TElement>();
         var first = true;
+
+        var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
+
         foreach (var item in value)
         {
             if (first)
@@ -19,7 +24,19 @@ public sealed class EnumerableWebSerializer<TCollection, TElement> : IWebSeriali
             }
             else
             {
-                writer.AppendRaw(options.CollectionSeparator);
+                if (options.CollectionSeparator != null)
+                {
+                    writer.AppendRaw(options.CollectionSeparator);
+                }
+                else if (latestName != null)
+                {
+                    writer.AppendConcatenate();
+                    writer.AppendRaw(latestName);
+                }
+                else
+                {
+                    writer.AppendConcatenate();
+                }
             }
 
             serializer.Serialize(ref writer, item, options);
@@ -59,7 +76,7 @@ public sealed class DictionaryWebSerializer<TDictionary, TKey, TValue> : IWebSer
             writer.AppendNamePrefix();
             keySerializer.Serialize(ref writer, item.Key, options);
 
-            writer.AppendRaw("=");
+            writer.AppendEqual();
 
             // Value
             valueSerializer.Serialize(ref writer, item.Value, options);

@@ -27,10 +27,23 @@ namespace Cysharp.Web.Serializers
             if (value == null) return;
 
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
 <# for(var j = 1; j <= i; j++) { #>
 <# if(j != 1) { #>
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
 <# } #>
             options.GetRequiredSerializer<<#= BuildTypeParameter(j) #>>().Serialize(ref writer, value.<#= BuildGetItemProperty(j) #>, options);
 <# } #>
@@ -47,10 +60,23 @@ namespace Cysharp.Web.Serializers
         public void Serialize(ref WebSerializerWriter writer, ValueTuple<<#= BuildTypeParameters(i) #>> value, WebSerializerOptions options)
         {
             writer.EnterAndValidate(options);
+            var latestName = (options.CollectionSeparator == null) ? CollectionHelper.GetLatestName(writer.GetStringBuilder()) : null;
 
 <# for(var j = 1; j <= i; j++) { #>
 <# if(j != 1) { #>
-            writer.AppendRaw(options.CollectionSeparator);
+            if (options.CollectionSeparator != null)
+            {
+                writer.AppendRaw(options.CollectionSeparator);
+            }
+            else if (latestName != null)
+            {
+                writer.AppendConcatenate();
+                writer.AppendRaw(latestName);
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
 <# } #>
             options.GetRequiredSerializer<<#= BuildTypeParameter(j) #>>().Serialize(ref writer, value.<#= BuildGetItemProperty(j) #>, options);
 <# } #>

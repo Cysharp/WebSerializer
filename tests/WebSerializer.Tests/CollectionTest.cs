@@ -14,10 +14,10 @@ public class CollectionTest
     public void Array()
     {
         var foo = new[] { 10, 20, 30 };
-        WebSerializer.ToQueryString(new { foo }).Should().Be("foo=10,20,30");
+        WebSerializer.ToQueryString(new { foo }).Should().Be("foo=10&foo=20&foo=30");
 
-        var newConfig = WebSerializerOptions.Default with { CollectionSeparator = "_" };
-        WebSerializer.ToQueryString(new { foo }, newConfig).Should().Be("foo=10_20_30");
+        var newConfig = WebSerializerOptions.Default with { CollectionSeparator = "," };
+        WebSerializer.ToQueryString(new { foo }, newConfig).Should().Be("foo=10,20,30");
     }
 
     [Fact]
