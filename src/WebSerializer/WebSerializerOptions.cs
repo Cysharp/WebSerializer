@@ -8,10 +8,12 @@ namespace Cysharp.Web;
 
 public record WebSerializerOptions(IWebSerializerProvider Provider)
 {
+    static readonly UrlEncoder defaultEncoder = CreateDefaultEncoderWithEncodeSemicolonAndAtmark();
+
     public static WebSerializerOptions Default { get; } = new WebSerializerOptions(WebSerializerProvider.Default);
 
     public CultureInfo? CultureInfo { get; init; }
-    public UrlEncoder Encoder { get; init; } = CreateDefaultEncoderWithEncodeSemicolon();
+    public UrlEncoder Encoder { get; init; } = defaultEncoder;
     public int MaxDepth { get; init; } = 64;
 
     string? separator = null;
@@ -51,12 +53,21 @@ public record WebSerializerOptions(IWebSerializerProvider Provider)
         throw new InvalidOperationException($"Type is not found in provider. Type:{type}");
     }
 
-    static UrlEncoder CreateDefaultEncoderWithEncodeSemicolon()
+    static UrlEncoder CreateDefaultEncoderWithEncodeSemicolonAndAtmark()
     {
         // UrlEncoder.Default is UnicodeRanges.BasicLastin(\u0000 -> \u007F)
         // ; is U+003B so exclude in range
+        // @ is U+0040 so exclude in range
+
+        // 0 -> ';'
         var first = UnicodeRange.Create('\u0000', (char)(';' - 1));
-        var second = UnicodeRange.Create((char)(';' + 1), '\u007F');
-        return UrlEncoder.Create(first, second);
+
+        // ';' -> '@'
+        var second = UnicodeRange.Create((char)(';' + 1), (char)('@' - 1));
+
+        // '@' -> 7F
+        var third = UnicodeRange.Create((char)('@' + 1), '\u007F');
+
+        return UrlEncoder.Create(first, second, third);
     }
 }
