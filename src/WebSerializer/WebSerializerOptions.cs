@@ -44,10 +44,12 @@ public record WebSerializerOptions(IWebSerializerProvider Provider)
     {
         var serializer = Provider.GetSerializer<T>();
         if (serializer == null) Throw(typeof(T));
-        return serializer;
+        return serializer!;
     }
 
+#if !NETSTANDARD2_0
     [DoesNotReturn]
+#endif
     void Throw(Type type)
     {
         throw new InvalidOperationException($"Type is not found in provider. Type:{type}");

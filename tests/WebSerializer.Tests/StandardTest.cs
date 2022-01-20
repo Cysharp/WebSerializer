@@ -53,7 +53,7 @@ public class StandardTest
 
         var str1 = await content.ReadAsStringAsync();
 
-        var form = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
+        var form = new FormUrlEncodedContent(new KeyValuePair<string?, string?>[]
         {
             new ("CurrentPage", "10" ),
             new ("SortBy", "hoge and 日本語 japanese" ),

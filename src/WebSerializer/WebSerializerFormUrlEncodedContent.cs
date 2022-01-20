@@ -7,6 +7,13 @@ namespace Cysharp.Web;
 
 public sealed class WebSerializerFormUrlEncodedContent : HttpContent
 {
+    static readonly Encoding Latin1Encoding =
+#if (NETSTANDARD2_0 || NETSTANDARD2_1)
+        Encoding.GetEncoding(28591);
+#else
+        Encoding.Latin1;
+#endif
+
     readonly StringBuilder stringBuilder;
 
     // avoid to create byte[] so don't use FormUrlEncodedContent, ByteArrayContent.
@@ -20,6 +27,8 @@ public sealed class WebSerializerFormUrlEncodedContent : HttpContent
         : this(webSerializerWriter.GetStringBuilder())
     {
     }
+
+#if !(NETSTANDARD2_0 || NETSTANDARD2_1)
 
     protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
     {
@@ -35,12 +44,17 @@ public sealed class WebSerializerFormUrlEncodedContent : HttpContent
         }
     }
 
+#endif
+
     protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context)
     {
         return SerializeToStreamAsync(stream, context, default);
     }
 
-    protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
+#if !(NETSTANDARD2_0 || NETSTANDARD2_1)
+    protected override 
+#endif
+    async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
     {
         var buffer = ArrayPool<byte>.Shared.Rent(stringBuilder.Length);
         try
@@ -56,12 +70,16 @@ public sealed class WebSerializerFormUrlEncodedContent : HttpContent
 
     static void EncodeToBuffer(byte[] buffer, StringBuilder stringBuilder)
     {
+#if (NETSTANDARD2_0 || NETSTANDARD2_1)
+        Latin1Encoding.GetBytes(stringBuilder.ToString()).CopyTo(buffer.AsSpan());
+#else
         var span = buffer.AsSpan();
         foreach (var item in stringBuilder.GetChunks()) // stream.WriteAsync per chunk is slow, encode to buffer all data
         {
-            var written = Encoding.Latin1.GetBytes(item.Span, span);
+            var written = Latin1Encoding.GetBytes(item.Span, span);
             span = span.Slice(written);
         }
+#endif
     }
 
     protected override bool TryComputeLength(out long length)

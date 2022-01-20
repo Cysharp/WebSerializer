@@ -1,5 +1,4 @@
 ﻿using Cysharp.Web.Serializers;
-using System.Runtime.CompilerServices;
 
 namespace Cysharp.Web.Providers;
 
@@ -31,7 +30,8 @@ public sealed class GenericsWebSerializerProvider : IWebSerializerProvider
                 }
 
                 // Tuple/ValueTuple
-                if (type.IsAssignableTo(typeof(ITuple)))
+                var fullName = type.FullName;
+                if (fullName != null && (fullName.StartsWith("System.Tuple") || fullName.StartsWith("System.ValueTuple")))
                 {
                     var serializerType = (type.IsValueType)
                         ? TupleWebSerializer.GetValueTupleWebSerializerType(type.GenericTypeArguments.Length)

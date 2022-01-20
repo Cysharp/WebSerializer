@@ -9,7 +9,7 @@ internal static class CollectionHelper
         // foo=
         // ?foo=
         // &foo=
-        if (sb.Length != 0 && sb[^1] == '=')
+        if (sb.Length != 0 && sb[sb.Length - 1] == '=')
         {
             var lastIndex = -1;
             for (int i = sb.Length - 1; i >= 0; i--)
