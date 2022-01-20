@@ -6,6 +6,9 @@ var builder = WebApplication.CreateBuilder();
 builder.Logging.ClearProviders();
 builder.Logging.AddZLoggerConsole();
 
+
+
+
 builder.Services.AddControllers();
 
 var app = builder.Build();

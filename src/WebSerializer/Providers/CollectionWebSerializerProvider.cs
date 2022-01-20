@@ -36,7 +36,16 @@ public sealed class CollectionWebSerializerProvider : IWebSerializerProvider
                 if (enumerableDef != null)
                 {
                     var elementType = enumerableDef.GenericTypeArguments[0];
-                    return CreateInstance(typeof(EnumerableWebSerializer<,>), new[] { type, elementType });
+                    if (elementType.IsGenericType && elementType.GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+                    {
+                        var keyType = elementType.GenericTypeArguments[0];
+                        var valueType = elementType.GenericTypeArguments[1];
+                        return CreateInstance(typeof(EnumerableKeyValuePairWebSerializer<,,>), new[] { type, keyType, valueType });
+                    }
+                    else
+                    {
+                        return CreateInstance(typeof(EnumerableWebSerializer<,>), new[] { type, elementType });
+                    }
                 }
             }
 

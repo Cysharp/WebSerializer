@@ -85,3 +85,43 @@ public sealed class DictionaryWebSerializer<TDictionary, TKey, TValue> : IWebSer
         writer.Exit();
     }
 }
+
+public sealed class EnumerableKeyValuePairWebSerializer<TCollection, TKey, TValue> : IWebSerializer<TCollection>
+    where TCollection : IEnumerable<KeyValuePair<TKey, TValue>>
+{
+    public void Serialize(ref WebSerializerWriter writer, TCollection value, WebSerializerOptions options)
+    {
+        if (value == null) return;
+
+        writer.EnterAndValidate(options);
+
+        var keySerializer = options.GetRequiredSerializer<TKey>();
+        var valueSerializer = options.GetRequiredSerializer<TValue>();
+
+        var first = true;
+        foreach (var item in value)
+        {
+            if (item.Value == null) continue;
+
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                writer.AppendConcatenate();
+            }
+
+            // Name
+            writer.AppendNamePrefix();
+            keySerializer.Serialize(ref writer, item.Key, options);
+
+            writer.AppendEqual();
+
+            // Value
+            valueSerializer.Serialize(ref writer, item.Value, options);
+        }
+
+        writer.Exit();
+    }
+}

@@ -49,6 +49,20 @@ public class CollectionTest
         WebSerializer.ToQueryString(foo, newConfig).Should().Be("Yeah=100&Kuooo=nano%20yo&DEAR=0");
     }
 
+    [Fact]
+    public void KVP()
+    {
+        var parameters = new KeyValuePair<string, string>[]
+        {
+            new ("id", "1"),
+            new ("name", "tanaka"),
+            new ("email", "test@example.com")
+        };
+
+        var url = WebSerializer.ToQueryString("https://example.com/user", parameters);
+
+        url.Should().Be("https://example.com/user?id=1&name=tanaka&email=test%40example.com");
+    }
 
     public class BoolZeroOneSerializer : IWebSerializer<bool>
     {

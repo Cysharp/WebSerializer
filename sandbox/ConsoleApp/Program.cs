@@ -1,26 +1,25 @@
 ﻿using Cysharp.Web;
 using System.Net.Http.Json;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Web;
 
-var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:5000") };
-//var api = RestService.For<IMinimumAPI>(client);
-//await api.Get(10, "octocat");
+var parameters = new KeyValuePair<string, string>[]
+{
+    new ("id", "1"),
+    new ("name", "tanaka"),
+    new ("email", "test@example.com")
+};
 
-//var k = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-//var s1 = UrlEncoder.Default.Encode(k);
-//var s2 = HttpUtility.UrlEncode(k);
-//Console.WriteLine(s1);
-//Console.WriteLine(s2);
-//return;
+Console.WriteLine(WebSerializer.ToQueryString("https://example.com/user", parameters));
 
 
-//await httpClient.GetAsync(WebSerializer.ToQueryString("Products", new { foo = new[] { 1, 10, 1000 } }, WebSerializerOptions.Default with { CollectionSeparator = "," }));
 
-var s = WebSerializer.ToQueryString("http://www.example.com/q?foo=bar", new { hoge = "moge" });
-Console.WriteLine(s);
+
+//GCHandle handle = GCHandle.Alloc("", GCHandleType.Pinned);
+
 
 return;
     
