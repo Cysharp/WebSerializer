@@ -22,7 +22,7 @@ Also, the allocations are very low and the performance is very good. It is desig
 
 Getting Started
 ---
-Supporting platform is .NET 5, .NET 6.
+Supporting platform is .NET Standard 2.0, 2.1, .NET 5, .NET 6.
 
 > PM> Install-Package [WebSerializer](https://www.nuget.org/packages/WebSerializer)
 
