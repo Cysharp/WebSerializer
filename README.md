@@ -72,7 +72,7 @@ async Task PostMessage(string name, string email, string message)
 }
 ```
 
-IF you want to build parameters dynamic in application, use `Dictionary<string, object>`.
+IF you want to build parameters dynamic in application, use `Dictionary<string, object>`(also allows `<TKey, TValue>`) or `IEnumerbale<KeyValuePair<string, object>>`(also allows `<TKey, TValue>`).
 
 ```csharp
 var req = new Dictionary<string, object>();
@@ -80,7 +80,20 @@ req.Add("sortBy", "id");
 req.Add("direction", SortDirection.Asc);
 req.Add("currentPage", 10);
 
+// sortBy=id&direction=Asc&currentPage=10
 var q = WebSerializer.ToQueryString(req);
+
+// also allows IEnumerable<KeyValuePair<TKey, TValue>>
+
+var parameters = new KeyValuePair<string, string>[]
+{
+    new ("id", "1"),
+    new ("name", "tanaka"),
+    new ("email", "test@example.com")
+};
+
+// https://example.com/user?id=1&name=tanaka&email=test%40example.com
+var url = WebSerializer.ToQueryString("https://example.com/user", parameters);
 ```
 
 `WebSerializerProvider` and `IWebSerialize<T>`
@@ -307,7 +320,7 @@ WebSerializerOptions is immutable record, you can configure new options uses C# 
 ```csharp
 // CultureInfo: Used by converting number or DateTime, etc. Default is null.
 // CollectionSeparator: Separator of converting array, etc. Default is null(concatenate as name=value&name=value...)
-// Encoder: Url encoder of serialization, Default is custom encoder(UrlEncoder.Default with ';' Encode)
+// Encoder: Url encoder of serialization, Default is custom encoder(UrlEncoder.Default with ';' and '@' Encode)
 // MaxDepth: Detect circular reference, Default is 64.
 // Provider: Setup custom serializer by type. Default is `WebSerializerProvider.Default`.
 var newConfig = WebSerializerOptions.Default with
