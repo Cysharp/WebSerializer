@@ -20,6 +20,24 @@ public sealed class CollectionWebSerializerProvider : IWebSerializerProvider
     {
         try
         {
+            // Wellknown specialized types
+            if (type == typeof(Dictionary<string, string>))
+            {
+                return new DictionaryWebSerializer<Dictionary<string, string>, string, string>();
+            }
+            else if (type == typeof(Dictionary<string, object>))
+            {
+                return new DictionaryWebSerializer<Dictionary<string, object>, string, object>();
+            }
+            else if (type == typeof(KeyValuePair<string, string>[]))
+            {
+                return new EnumerableKeyValuePairWebSerializer<KeyValuePair<string, string>[], string, string>();
+            }
+            else if (type == typeof(KeyValuePair<string, object>[]))
+            {
+                return new EnumerableKeyValuePairWebSerializer<KeyValuePair<string, object>[], string, object>();
+            }
+
             if (type.IsGenericType || type.IsArray)
             {
                 // Generic Dictionary
