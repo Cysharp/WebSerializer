@@ -15,7 +15,7 @@ var q = WebSerializer.ToQueryString(new { foo, bar, baz }); // foo=aaa&bar=100&b
 var url = WebSerializer.ToQueryString("https://foo/search", req); // https://foo/search?foo=aaa&bar=100&baz=zzz
 
 // For Post, create form-url-encoded HttpContent
-var content - WebSerializer.ToHttpContent(req);
+var content = WebSerializer.ToHttpContent(req);
 ```
 
 Also, the allocations are very low and the performance is very good. It is designed to be on the same level as [MessagePack for C#](https://github.com/neuecc/MessagePack-CSharp), a fast binary serializer by the same author.
@@ -31,7 +31,7 @@ You can use `WebSerializer.ToQueryString` or `WebSerializer.ToHttpContent` to bu
 ```csharp
 using Cysharp.Web; // namespace
 
-var req = new Request(sortBy: "id", direction: SortDirection.Desc, currentPage: 3)
+var req = new Request(sortBy: "id", direction: SortDirection.Desc, currentPage: 3);
 
 // sortBy=id&direction=Desc&currentPage=3
 var q = WebSerializer.ToQueryString(req);
@@ -72,7 +72,7 @@ async Task PostMessage(string name, string email, string message)
 }
 ```
 
-IF you want to build parameters dynamic in application, use `Dictionary<string, object>`(also allows `<TKey, TValue>`) or `IEnumerbale<KeyValuePair<string, object>>`(also allows `<TKey, TValue>`).
+IF you want to build parameters dynamic in application, use `Dictionary<string, object>`(also allows `<TKey, TValue>`) or `IEnumerable<KeyValuePair<string, object>>`(also allows `<TKey, TValue>`).
 
 ```csharp
 var req = new Dictionary<string, object>();
@@ -225,7 +225,7 @@ public class User
 }
 ```
 
-If type has not `DataContract(Namespace)` or add diffrent namespaces per request type, use `WebSerializerWriter` to configure it.
+If type has not `DataContract(Namespace)` or add different namespaces per request type, use `WebSerializerWriter` to configure it.
 
 
 ```csharp
