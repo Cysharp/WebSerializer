@@ -1,34 +1,34 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFrameworks>net6.0</TargetFrameworks>
-		<Nullable>enable</Nullable>
-		<IsPackable>false</IsPackable>
-		<RootNamespace>WebSerializerTests</RootNamespace>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>WebSerializerTests</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="FluentAssertions" Version="6.3.0" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
-		<PackageReference Include="xunit" Version="2.4.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.3.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\WebSerializer\WebSerializer.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\WebSerializer\WebSerializer.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Using Include="Xunit" />
-		<Using Include="FluentAssertions" />
-		<Using Include="Cysharp.Web" />
-		<Using Include="Cysharp.Web.Serializers" />
-		<Using Include="Cysharp.Web.Providers" />
-	</ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="FluentAssertions" />
+    <Using Include="Cysharp.Web" />
+    <Using Include="Cysharp.Web.Serializers" />
+    <Using Include="Cysharp.Web.Providers" />
+  </ItemGroup>
 
 </Project>
