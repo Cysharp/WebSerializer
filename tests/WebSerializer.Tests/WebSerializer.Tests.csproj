@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
     <RootNamespace>WebSerializerTests</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
