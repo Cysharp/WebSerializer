@@ -84,16 +84,19 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
         // SerializeMethod(ref WebSerializerWriter writer, string[] encodedNames, IWebSerializer[]? alternateSerializers, T value, WebSerializerOptions options)
         // foreach(members)
         //   if (value.Foo != null) // reference type || nullable type
-        //     if (i != 0) writer.AppendConcatenate()
+        //     if (written) writer.AppendConcatenate()
         //     writer.AppendNamePrefix()
         //     writer.AppendRaw(encodedNames[i])
         //     options.GetRequiredSerializer<T>() || ((IWebSerialzier<T>)alternateSerializers[0] .Serialize(writer, value.Foo, options)
+        //     written = true
 
         var argWriter = Expression.Parameter(typeof(WebSerializerWriter).MakeByRefType());
         var argEncodedNames = Expression.Parameter(typeof(string[]));
         var argAlternateSerializers = Expression.Parameter(typeof(IWebSerializer[]));
         var argValue = Expression.Parameter(valueType);
         var argOptions = Expression.Parameter(typeof(WebSerializerOptions));
+
+        var written = Expression.Variable(typeof(bool), "written");
 
         var foreachBodies = new List<Expression>();
 
@@ -104,7 +107,8 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
 
             if (i != 0)
             {
-                var body2 = Expression.Call(argWriter, ReflectionInfos.WebSerializerWriter_AppendConcatenate);
+                // check whether a previous member was actually written(it may have been skipped as null)
+                var body2 = Expression.IfThen(written, Expression.Call(argWriter, ReflectionInfos.WebSerializerWriter_AppendConcatenate));
                 writeBody.Add(body2);
             }
 
@@ -129,6 +133,7 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
             writeBody.Add(body3);
             writeBody.Add(body4);
             writeBody.Add(body5);
+            writeBody.Add(Expression.Assign(written, Expression.Constant(true)));
 
             var bodyBlock = Expression.Block(writeBody);
 
@@ -146,7 +151,7 @@ internal sealed class CompiledObjectGraphWebSerializer<T> : IWebSerializer<T>
             i++;
         }
 
-        var body = Expression.Block(foreachBodies);
+        var body = Expression.Block(new[] { written }, foreachBodies);
         var lambda = Expression.Lambda<SerializeMethod>(body, argWriter, argEncodedNames, argAlternateSerializers, argValue, argOptions);
         return lambda.Compile();
     }

@@ -22,6 +22,29 @@ public class NullableTest
     }
 
     [Fact]
+    public void FirstMemberNull()
+    {
+        var a = new NullableRequest()
+        {
+            Afoo = null,
+            Bbar = 200,
+            Ctor = 999
+        };
+
+        WebSerializer.ToQueryString(a).Should().Be("Bbar=200&Ctor=999");
+        WebSerializer.ToQueryString("/foo", a).Should().Be("/foo?Bbar=200&Ctor=999");
+
+        var b = new NullableRequest()
+        {
+            Afoo = null,
+            Bbar = null,
+            Ctor = 999
+        };
+
+        WebSerializer.ToQueryString(b).Should().Be("Ctor=999");
+    }
+
+    [Fact]
     public void Dict()
     {
         var a = new Dictionary<string, int?>()
